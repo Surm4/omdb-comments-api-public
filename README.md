@@ -1,6 +1,6 @@
 # Node & swagger omdb and comments api
 ## How to run
-- clone repo, provide credentials to mysql db in .env file, build with docker
+- clone repo, create mysqldb and import there tables.sql file, provide credentials to mysql db in .env file, build with docker
 
 
 OR
@@ -9,6 +9,7 @@ OR
 - `install swagger e.g. npm i -g swagger`
 - `clone project`
 - `npm i`
+- `create mysqldb and import there tables.sql file`
 - `provide mysql db credentials to .env file `
 (I used https://freesqldatabase.com)
 - `swagger project start`
