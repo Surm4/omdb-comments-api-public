@@ -1,5 +1,11 @@
 # Node & swagger omdb and comments api
 ## How to run
+- clone repo, provide credentials do mysql db, build with docker
+
+
+OR
+
+
 - `install swagger e.g. npm i -g swagger`
 - `clone project`
 - `npm i`
