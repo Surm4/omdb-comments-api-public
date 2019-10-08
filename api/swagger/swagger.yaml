@@ -1,0 +1,233 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: OMDB comments api
+# during dev, should point to your local machine
+host: localhost:10010
+basePath: /
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+  - application/xml
+produces:
+  - application/json
+paths:
+  /comments:
+    x-swagger-router-controller: comments_controllers
+    get:
+      description: Displays list of all comments.
+      operationId: getCommentsController
+      parameters:
+      - name: imdbID
+        in: query
+        description: Return comments which match with passed movieimdbID
+        required: false
+        type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/GetCommentsResponse"
+        default:
+          description: Messages it can be everything. Just message to user.
+          schema:
+            $ref: "#/definitions/MessageResponse"
+    post:
+      description: Save user comment to db
+      operationId: postCommentsController
+      parameters:
+      - in: body
+        name: body
+        required: true
+        schema: 
+          $ref: "#/definitions/PostComments"
+      responses:
+        default:
+          description: Messages it can be everything. Just message to user.
+          schema:
+            $ref: "#/definitions/MessageResponse"
+  /movies:
+    x-swagger-router-controller: movies_controllers
+    get:
+      description: Displays list of all movies already present in application database.
+      operationId: getMoviesController
+      parameters:
+      - name: year
+        in: query
+        description: Return movies where year is equal to passed year.
+        required: false
+        type: integer
+        format: int64
+      - name: metascore
+        description: Return movies where metascore is equal to passed metascore.
+        in: query
+        required: false
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/GetMoviesResponse"
+        default:
+          description: Messages it can be everything. Just message to user.
+          schema:
+            $ref: "#/definitions/MessageResponse"
+    post:
+      description: Use external api to search for passed movie/id and if it's correct movie save it do database.
+      operationId: postMoviesController
+      parameters:
+      - in: body
+        name: body
+        required: true
+        schema: 
+          $ref: "#/definitions/PostMovies"
+      responses:
+        default:
+          description: Messages it can be everything. Just message to user.
+          schema:
+            $ref: "#/definitions/MessageResponse"
+definitions:
+  PostComments:
+    required:
+    - Comment
+    - imdbID
+    type: object
+    properties:
+      Comment:
+        type: string
+      imdbID:
+        type: string
+      Rating:
+        type: string
+    additionalProperties: false
+  GetCommentsResponse:
+    type: array
+    items:
+      $ref: "#/definitions/Comments"
+  Comments:
+    type: object
+    required:
+    - ID
+    - Comment
+    - MovieImdbID
+    properties:
+      ID:
+        type: integer
+        format: int64
+      Comment:
+        type: string
+      MovieImdbID:
+        type: string
+      Rating:
+        type: string
+  Ratings:
+    type: object
+    properties:
+      Source:
+        type: string
+      Value:
+        type: string
+  GetMoviesResponse: 
+    type: array
+    items: 
+      $ref: "#/definitions/Movies"
+  Movies:
+    type: object
+    required:
+    - Actors
+    - Awards
+    - BoxOffice
+    - Country
+    - DVD
+    - Director
+    - Genre
+    - Language
+    - Metascore
+    - Plot
+    - Poster
+    - Production
+    - Rated
+    - Ratings
+    - Released
+    - Response
+    - Runtime
+    - Title
+    - Type
+    - Website
+    - Writer
+    - Year
+    - imdbID
+    - imdbRating
+    - imdbVotes
+    properties:
+      Actors:
+        type: string
+      Awards:
+        type: string
+      BoxOffice:
+        type: string
+      Country: 
+        type: string
+      DVD:
+        type: string
+      Director:
+        type: string
+      Genre:
+        type: string
+      Language:
+        type: string
+      Metascore: 
+        type: string
+      Plot:
+        type: string
+      Poster:
+          type: string
+      Production:
+        type: string
+      Rated:
+        type: string
+      Ratings:
+        type: array
+        items:
+          $ref: "#/definitions/Ratings"
+      Released:
+        type: string
+      Response: 
+        type: string
+      Runtime:
+        type: string
+      Title:
+        type: string
+      Type:
+        type: string
+      Website:
+        type: string
+      Writer:
+        type: string
+      Year:
+        type: string
+      imdbID:
+        type: string
+      imdbRating:
+        type: string
+      imdbVotes: 
+        type: string
+  PostMovies:
+    type: object
+    properties:
+      title:
+        type: string
+      imdbID:
+        type:
+          string
+    additionalProperties: false
+    minProperties: 1
+  MessageResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
