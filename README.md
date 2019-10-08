@@ -1,6 +1,6 @@
 # Node & swagger omdb and comments api
 ## How to run
-- clone repo, provide credentials do mysql db, build with docker
+- clone repo, provide credentials to mysql db in .env file, build with docker
 
 
 OR
